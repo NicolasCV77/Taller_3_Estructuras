@@ -1,30 +1,30 @@
 #include "arbolRN.h"
 
-template <typename T>
+template <class T>
 arbolRN<T>::arbolRN() {
     // Constructor vacío.
 }
 
-template <typename T>
-void arbolRN<T>::insert(T &v) {
-    s.insert(v);
+template <class T>
+void arbolRN<T>::insert(T &valor) {
+    s.insert(valor);
 }
 
-template <typename T>
-void arbolRN<T>::erase(T &v) {
-    s.erase(v);
+template <class T>
+void arbolRN<T>::erase(T &valor) {
+    s.erase(valor);
 }
 
-template <typename T>
-void arbolRN<T>::inordenEnLista(list<T> &out) {
+template <class T>
+void arbolRN<T>::inordenEnLista(list<T> &salida) {
     typename set<T>::iterator it = s.begin();
     while (it != s.end()) {
-        out.push_back(*it);
-        it++;
+        salida.insert(salida.end(), *it);
+        ++it;
     }
 }
 
-template <typename T>
+template <class T>
 int arbolRN<T>::size() {
     return s.size();
 }

@@ -15,9 +15,9 @@ class arbolRN {
 
     public:
         arbolRN();
-        void insert(T &v);
-        void erase(T &v);
-        void inordenEnLista(list<T> &out);
+        void insert(T &valor);
+        void erase(T &valor);
+        void inordenEnLista(list<T> &salida);
         int size();
 
 };
