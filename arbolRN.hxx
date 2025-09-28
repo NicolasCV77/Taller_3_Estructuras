@@ -19,7 +19,7 @@ template <class T>
 void arbolRN<T>::inordenEnLista(list<T> &salida) {
     typename set<T>::iterator it = s.begin();
     while (it != s.end()) {
-        salida.insert(salida.end(), *it);
+        salida.push_back(*it);
         ++it;
     }
 }
