@@ -6,13 +6,15 @@ monticulo<T>::monticulo() {
 }
 
 template<typename T>
-void monticulo<T>::insert(T &value) {
-    data.push_back(value);                
-    push_heap(data.begin(), data.end()); 
+void monticulo<T>::insert(const T &value) {
+    if (find(data.begin(), data.end(), value) != data.end()) 
+    return; // ya existe → no insertar
+    data.push_back(value);
+    push_heap(data.begin(), data.end());
 }
 
 template<typename T>
-void monticulo<T>::erase(T &value) {
+void monticulo<T>::erase(const T &value) {
     typename vector<T>::iterator it = find(data.begin(), data.end(), value);
     if (it == data.end()) return; 
 
@@ -24,7 +26,7 @@ void monticulo<T>::erase(T &value) {
 }
 
 template<typename T>
-void monticulo<T>::inordenEnLista(list<T>& listaOrdenada) {
+void monticulo<T>::inordenEnLista(list<T>& listaOrdenada)const {
     vector<T> temp = data;          
     sort(temp.begin(), temp.end()); 
     listaOrdenada.clear();
@@ -35,11 +37,11 @@ void monticulo<T>::inordenEnLista(list<T>& listaOrdenada) {
 }
 
 template<typename T>
-int monticulo<T>::size() {
+int monticulo<T>::size()const {
     return data.size();
 }
 
 template<typename T>
-bool monticulo<T>::empty() {
+bool monticulo<T>::empty()const {
     return data.empty();
 }

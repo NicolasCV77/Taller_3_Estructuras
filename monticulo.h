@@ -16,12 +16,12 @@ private:
 public:
   monticulo();
 
-  void insert(T &value);
-  void erase(T &value);
-  void inordenEnLista(list<T> &listaOrdenada);
+  void insert(const T &value);
+  void erase(const T &value);
+  void inordenEnLista(list<T> &listaOrdenada)const;
 
-  int size();
-  bool empty();
+  int size()const;
+  bool empty()const;
 };
 
 // Incluimos la implementación.
