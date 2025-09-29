@@ -8,20 +8,20 @@
 using namespace std;
 
 //Declaración de la clase monticulo.
-template<typename T>
+template<class T>
 class monticulo {
-private:
-  vector<T> data; 
+  private:
+    vector<T> data; 
 
-public:
-  monticulo();
+  public:
+    monticulo();
 
-  void insert(const T &value);
-  void erase(const T &value);
-  void inordenEnLista(list<T> &listaOrdenada)const;
+    void insert(T &value);
+    void erase(T &value);
+    void inordenEnLista(list<T> &listaOrdenada);
 
-  int size()const;
-  bool empty()const;
+    int size();
+    bool empty();
 };
 
 // Incluimos la implementación.
