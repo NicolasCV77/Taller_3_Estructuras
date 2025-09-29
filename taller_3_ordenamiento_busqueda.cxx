@@ -26,7 +26,7 @@ using namespace std;
 // #include "arbolRN.h"
 
 // TODO #11: Incluir cabecera de la STL correspondiente al montículo
-// #include "monticulo.h"
+   #include "monticulo.h"
 
 typedef list<string> TList;
 
@@ -37,7 +37,7 @@ typedef list<string> TList;
 // typedef arbolRN<string> TRN;
 
 // TODO #12: Definir Montículo de tipo string
-// typedef monticulo<string> THeap;
+typedef monticulo<string> THeap;
 
 struct ReadStats {
   size_t ops_total   = 0;
@@ -105,7 +105,7 @@ int main(int argc, char *argv[])
   // TRN miArbolRN;
 
   // TODO #13: Definir variable tipo Montículo.
-  // THeap miMonticulo;
+  THeap miMonticulo;
 
   ReadStats statsAVL;
   chrono::steady_clock::time_point t0AVL = chrono::steady_clock::now();
@@ -123,7 +123,8 @@ int main(int argc, char *argv[])
 
   ReadStats statsHeap;
   chrono::steady_clock::time_point t0Heap = chrono::steady_clock::now();
-  // bool lecturaHeap = LeerArbol(miMonticulo, archivo, medirCadaOperacion, statsHeap);
+  // TODO #14
+  bool lecturaHeap = LeerArbol(miMonticulo, archivo, medirCadaOperacion, statsHeap);
   chrono::steady_clock::time_point t1Heap = chrono::steady_clock::now();
   double tiempoLecturaHeap = chrono::duration<double>(t1Heap - t0Heap).count();
   statsHeap.secs_total = tiempoLecturaHeap;
@@ -142,7 +143,7 @@ int main(int argc, char *argv[])
   // miArbolRN.inordenEnLista(inordenRN);
 
   // TODO #15: Llamar la función que genera el recorrido en inorden del montículo y lo guarda en una lista dada como parámetro.
-  // miMonticulo.inordenEnLista(inordenHeap);
+  miMonticulo.inordenEnLista(inordenHeap);
 
 
   size_t sizeAVL  = inordenAVL.size();
