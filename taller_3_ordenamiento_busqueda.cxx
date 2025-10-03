@@ -20,7 +20,7 @@
 using namespace std;
 
 // TODO #01: Incluir cabecera de la implementación propia del árbol AVL
-// #include "arbolAVL.h"
+#include "arbolAVL.h"
 
 // TODO #06: Incluir cabecera de la STL correspondiente al árbol rojinegro
 // #include "arbolRN.h"
@@ -31,7 +31,7 @@ using namespace std;
 typedef list<string> TList;
 
 // TODO #02: Definir árbol AVL de tipo string
-// typedef arbolAVL<string> TAVL;
+typedef arbolAVL<string> TAVL;
 
 // TODO #07: Definir árbol rojinegro de tipo string
 // typedef arbolRN<string> TRN;
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
   const bool medirCadaOperacion = (modo == 'Y');
 
   // TODO #03: Definir variable tipo árbol AVL.
-  // TAVL miArbolAVL;
+  TAVL miArbolAVL;
 
   // TODO #08: Definir variable tipo árbol rojinegro.
   // TRN miArbolRN;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[])
 
   ReadStats statsAVL;
   chrono::steady_clock::time_point t0AVL = chrono::steady_clock::now();
-  // bool lecturaAVL = LeerArbol(miArbolAVL, archivo, medirCadaOperacion, statsAVL);
+  bool lecturaAVL = LeerArbol(miArbolAVL, archivo, medirCadaOperacion, statsAVL);
   chrono::steady_clock::time_point t1AVL = chrono::steady_clock::now();
   double tiempoLecturaAVL = chrono::duration<double>(t1AVL - t0AVL).count();
   statsAVL.secs_total = tiempoLecturaAVL;
@@ -137,7 +137,7 @@ int main(int argc, char *argv[])
   TList inordenAVL, inordenRN, inordenHeap;
 
   // TODO #05: Llamar la función que genera el recorrido en inorden del árbol AVL y lo guarda en una lista dada como parámetro.
-  // miArbolAVL.inordenEnLista(inordenAVL);
+  miArbolAVL.inordenEnLista(inordenAVL);
 
   // TODO #10: Llamar la función que genera el recorrido en inorden del árbol rojinegro y lo guarda en una lista dada como parámetro.
   // miArbolRN.inordenEnLista(inordenRN);
@@ -170,7 +170,7 @@ int main(int argc, char *argv[])
   */
 
   // TODO #16: Crear iteradores para recorrer cada una de las estructuras lineales 
-  // TList::iterator itAVL  = inordenAVL.begin();
+  TList::iterator itAVL  = inordenAVL.begin();
   // TList::iterator itRN   = inordenRN.begin();
   // TList::iterator itHeap = inordenHeap.begin();
   
