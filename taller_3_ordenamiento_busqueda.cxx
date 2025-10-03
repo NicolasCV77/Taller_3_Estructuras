@@ -23,7 +23,7 @@ using namespace std;
 #include "arbolAVL.h"
 
 // TODO #06: Incluir cabecera de la STL correspondiente al árbol rojinegro
-// #include "arbolRN.h"
+#include "arbolRN.h"
 
 // TODO #11: Incluir cabecera de la STL correspondiente al montículo
 #include "monticulo.h"
@@ -34,7 +34,7 @@ typedef list<string> TList;
 typedef arbolAVL<string> TAVL;
 
 // TODO #07: Definir árbol rojinegro de tipo string
-// typedef arbolRN<string> TRN;
+typedef arbolRN<string> TRN;
 
 // TODO #12: Definir Montículo de tipo string
 typedef monticulo<string> THeap;
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   TAVL miArbolAVL;
 
   // TODO #08: Definir variable tipo árbol rojinegro.
-  // TRN miArbolRN;
+  TRN miArbolRN;
 
   // TODO #13: Definir variable tipo Montículo.
   THeap miMonticulo;
@@ -116,7 +116,7 @@ int main(int argc, char *argv[])
 
   ReadStats statsRN;
   chrono::steady_clock::time_point t0RN = chrono::steady_clock::now();
-  // bool lecturaRN = LeerArbol(miArbolRN, archivo, medirCadaOperacion, statsRN);
+  bool lecturaRN = LeerArbol(miArbolRN, archivo, medirCadaOperacion, statsRN);
   chrono::steady_clock::time_point t1RN = chrono::steady_clock::now();
   double tiempoLecturaRN = chrono::duration<double>(t1RN - t0RN).count();
   statsRN.secs_total = tiempoLecturaRN;
@@ -140,7 +140,7 @@ int main(int argc, char *argv[])
   miArbolAVL.inordenEnLista(inordenAVL);
 
   // TODO #10: Llamar la función que genera el recorrido en inorden del árbol rojinegro y lo guarda en una lista dada como parámetro.
-  // miArbolRN.inordenEnLista(inordenRN);
+  miArbolRN.inordenEnLista(inordenRN);
 
   // TODO #15: Llamar la función que genera el recorrido en inorden del montículo y lo guarda en una lista dada como parámetro.
   miMonticulo.inordenEnLista(inordenHeap);
@@ -171,8 +171,8 @@ int main(int argc, char *argv[])
 
   // TODO #16: Crear iteradores para recorrer cada una de las estructuras lineales 
   TList::iterator itAVL  = inordenAVL.begin();
-  // TList::iterator itRN   = inordenRN.begin();
-  // TList::iterator itHeap = inordenHeap.begin();
+  TList::iterator itRN   = inordenRN.begin();
+  TList::iterator itHeap = inordenHeap.begin();
   
   // TODO #17: Recorrer las estructuras lineales y comparar elemento a elemento la igualdad o desigualdad
   // bool todosIguales = true;
