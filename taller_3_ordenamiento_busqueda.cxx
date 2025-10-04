@@ -114,6 +114,9 @@ int main(int argc, char *argv[])
   double tiempoLecturaAVL = chrono::duration<double>(t1AVL - t0AVL).count();
   statsAVL.secs_total = tiempoLecturaAVL;
 
+  // Imprimir resumen de estadísticas del árbol AVL
+  ImprimirResumen("ÁRBOL AVL - Estadísticas de Carga", statsAVL, medirCadaOperacion);
+
   ReadStats statsRN;
   chrono::steady_clock::time_point t0RN = chrono::steady_clock::now();
   bool lecturaRN = LeerArbol(miArbolRN, archivo, medirCadaOperacion, statsRN);
@@ -121,13 +124,18 @@ int main(int argc, char *argv[])
   double tiempoLecturaRN = chrono::duration<double>(t1RN - t0RN).count();
   statsRN.secs_total = tiempoLecturaRN;
 
+  // Imprimir resumen de estadísticas del árbol Rojo-Negro
+  ImprimirResumen("ÁRBOL ROJO-NEGRO - Estadísticas de Carga", statsRN, medirCadaOperacion);
+
   ReadStats statsHeap;
   chrono::steady_clock::time_point t0Heap = chrono::steady_clock::now();
-  // TODO #14
-  bool lecturaHeap = LeerArbol(miMonticulo, archivo, medirCadaOperacion, statsHeap);
+  bool lecturaHeap = LeerArbol(miMonticulo, archivo, medirCadaOperacion, statsHeap); 
   chrono::steady_clock::time_point t1Heap = chrono::steady_clock::now();
   double tiempoLecturaHeap = chrono::duration<double>(t1Heap - t0Heap).count();
   statsHeap.secs_total = tiempoLecturaHeap;
+
+  // Imprimir resumen de estadísticas del Montículo
+  ImprimirResumen("MONTÍCULO - Estadísticas de Carga", statsHeap, medirCadaOperacion);
 
   /*
     =============================================
@@ -175,26 +183,26 @@ int main(int argc, char *argv[])
   TList::iterator itHeap = inordenHeap.begin();
   
   // TODO #17: Recorrer las estructuras lineales y comparar elemento a elemento la igualdad o desigualdad
-  // bool todosIguales = true;
-  // for (size_t i = 0; i < minSize; ++i, ++itAVL, ++itRN, ++itHeap) {
-  //   if (!(*itAVL == *itRN && *itRN == *itHeap)) {
-  //     cout << " Diferencia en la posicion " << i
-  //               << " | AVL: " << *itAVL
-  //               << " | RN: "  << *itRN
-  //               << " | Heap: "<< *itHeap << "\n";
-  //     todosIguales = false;
-  //   }
-  // }
+  bool todosIguales = true;
+  for (size_t i = 0; i < minSize; ++i, ++itAVL, ++itRN, ++itHeap) {
+    if (!(*itAVL == *itRN && *itRN == *itHeap)) {
+      cout << " Diferencia en la posicion " << i
+           << " | AVL: " << *itAVL
+           << " | RN: "  << *itRN
+           << " | Heap: "<< *itHeap << "\n";
+      todosIguales = false;
+    }
+  }
 
   // TODO #18: Informar si los árboles coinciden en la totalidad de los elementos teniendo en cuenta su posición
-  // if (todosIguales && sizeAVL == sizeRN && sizeRN == sizeHeap) {
-  //   cout << " ==> Coincidencia total: los tres recorridos inorden son idénticos.\n";
-  // } else if (todosIguales) {
-  //   cout << " ==> Coincidencia parcial: igualdad en posiciones comparadas, pero tamaños distintos.\n";
-  // } else {
-  //   cout << " ==> No hay coincidencia total entre las tres estructuras.\n";
-  // }
-
+  if (todosIguales && sizeAVL == sizeRN && sizeRN == sizeHeap) {
+    cout << " ==> Coincidencia total: los tres recorridos inorden son idénticos.\n";
+  } else if (todosIguales) {
+    cout << " ==> Coincidencia parcial: igualdad en posiciones comparadas, pero tamaños distintos.\n";
+  } else {
+    cout << " ==> No hay coincidencia total entre las tres estructuras.\n";
+  }
+  
   return (0);
 }
 
