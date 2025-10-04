@@ -7,7 +7,7 @@
 
 using namespace std;
 
-// Declaración de la clase arbolRN.
+// Clase template para un árbol rojinegro.
 template <class T>
 class arbolRN {
     private:
@@ -22,7 +22,7 @@ class arbolRN {
 
 };
 
-// Incluimos la implementación.
+// Implementación clase arbolRN.
 #include "arbolRN.hxx"
 
 #endif

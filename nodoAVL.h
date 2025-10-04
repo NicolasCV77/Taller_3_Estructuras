@@ -1,30 +1,29 @@
-#ifndef NODOAVL_H
-#define NODOAVL_H
+#ifndef NODO_AVL
+#define NODO_AVL
 
+// Clase template para un nodo de árbol AVL.
 template <class T>
 class nodoAVL {
-private:
-    T dato;
-    nodoAVL<T>* izq;
-    nodoAVL<T>* der;
-    int altura;
+    private:
+        T dato;
+        int altura;
+        nodoAVL<T> *izq;
+        nodoAVL<T> *der;
 
-public:
-    nodoAVL(T val);
+    public:
+        nodoAVL(T val);
+        T obtenerDato();
+        int obtenerAltura();
+        nodoAVL<T> *obtenerIzq();
+        nodoAVL<T> *obtenerDer();
+        void fijarDato(T val); 
+        void fijarAltura(int h);
+        void fijarIzq(nodoAVL<T> *nodo);
+        void fijarDer(nodoAVL<T> *nodo);
 
-    T obtenerDato() const;
-    void fijarDato(T val);
-
-    nodoAVL<T>* obtenerIzq() const;
-    nodoAVL<T>* obtenerDer() const;
-
-    void fijarIzq(nodoAVL<T>* nodo);
-    void fijarDer(nodoAVL<T>* nodo);
-
-    int obtenerAltura() const;
-    void fijarAltura(int h);
 };
 
+// Implementación de la clase nodoAVL.
 #include "nodoAVL.hxx"
 
 #endif

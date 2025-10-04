@@ -1,30 +1,28 @@
-#ifndef MONTICULO_H
-#define MONTICULO_H
+#ifndef MONTICULO
+#define MONTICULO
 
-#include <vector>
-#include <list>
-#include <algorithm>
+#include <list> 
+#include <vector> 
 
 using namespace std;
 
-//Declaración de la clase monticulo.
+// Clase template para un montículo (heap).
 template<class T>
 class monticulo {
   private:
     vector<T> data; 
 
   public:
-    monticulo();
-
+    monticulo(); 
     void insert(T &value);
     void erase(T &value);
     void inordenEnLista(list<T> &listaOrdenada);
-
-    int size();
+    int size(); 
     bool empty();
+
 };
 
-// Incluimos la implementación.
+// Implementación de la clase monticulo.
 #include "monticulo.hxx"
 
 #endif

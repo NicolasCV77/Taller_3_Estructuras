@@ -1,8 +1,7 @@
-#include <algorithm> // max
+#include <algorithm>
 #include "arbolAVL.h"
 
-// Constructor/Destructor
-template <typename T>
+template <typename T> 
 arbolAVL<T>::arbolAVL() : raiz(nullptr) {}
 
 template <typename T>
@@ -11,29 +10,38 @@ arbolAVL<T>::~arbolAVL() {
 }
 
 template <typename T>
-void arbolAVL<T>::destruir(Nodo<T>* nodo) {
-    if (nodo == nullptr) return;
+void arbolAVL<T>::destruir(Nodo<T> *nodo) {
+    if (nodo == nullptr) {
+        return;
+    }
+
     destruir(nodo->izq);
     destruir(nodo->der);
     delete nodo;
 }
 
-// Altura y balance
-template <typename T>
-int arbolAVL<T>::altura(Nodo<T>* nodo) {
-    return (nodo == nullptr) ? 0 : nodo->altura;
+template <typename T> 
+int arbolAVL<T>::altura(Nodo<T> *nodo) {
+    if (nodo == nullptr) {
+        return 0;
+    } else {
+        return nodo->altura;
+    }
 }
 
 template <typename T>
-int arbolAVL<T>::obtenerBalance(Nodo<T>* nodo) {
-    return (nodo == nullptr) ? 0 : (altura(nodo->izq) - altura(nodo->der));
+int arbolAVL<T>::obtenerBalance(Nodo<T> *nodo) {
+    if (nodo == nullptr) {
+        return 0;
+    } else {
+        return altura(nodo->izq) - altura(nodo->der);
+    }
 }
 
-// Rotaciones
-template <typename T>
-Nodo<T>* arbolAVL<T>::rotarDerecha(Nodo<T>* y) {
-    Nodo<T>* x = y->izq;
-    Nodo<T>* T2 = x->der;
+template <typename T> 
+Nodo<T>* arbolAVL<T>::rotarDerecha(Nodo<T> *y) {
+    Nodo<T> *x = y->izq;
+    Nodo<T> *T2 = x->der;
 
     x->der = y;
     y->izq = T2;
@@ -45,9 +53,9 @@ Nodo<T>* arbolAVL<T>::rotarDerecha(Nodo<T>* y) {
 }
 
 template <typename T>
-Nodo<T>* arbolAVL<T>::rotarIzquierda(Nodo<T>* x) {
-    Nodo<T>* y = x->der;
-    Nodo<T>* T2 = y->izq;
+Nodo<T>* arbolAVL<T>::rotarIzquierda(Nodo<T> *x) {
+    Nodo<T> *y = x->der;
+    Nodo<T> *T2 = y->izq;
 
     y->izq = x;
     x->der = T2;
@@ -58,19 +66,17 @@ Nodo<T>* arbolAVL<T>::rotarIzquierda(Nodo<T>* x) {
     return y;
 }
 
-// Nodo mínimo (para encontrar sucesor en eliminación)
-template <typename T>
-Nodo<T>* arbolAVL<T>::nodoMinimo(Nodo<T>* nodo) {
-    Nodo<T>* actual = nodo;
+template <typename T> 
+Nodo<T>* arbolAVL<T>::nodoMinimo(Nodo<T> *nodo) {
+    Nodo<T> *actual = nodo;
     while (actual->izq != nullptr) {
         actual = actual->izq;
     }
     return actual;
 }
 
-// Eliminar un valor manteniendo balance AVL
-template <typename T>
-Nodo<T>* arbolAVL<T>::eliminarNodo(Nodo<T>* nodo, const T& valor) {
+template <typename T> 
+Nodo<T>* arbolAVL<T>::eliminarNodo(Nodo<T> *nodo, T &valor) {
     if (nodo == nullptr) {
         return nodo;
     }
@@ -80,9 +86,13 @@ Nodo<T>* arbolAVL<T>::eliminarNodo(Nodo<T>* nodo, const T& valor) {
     } else if (valor > nodo->dato) {
         nodo->der = eliminarNodo(nodo->der, valor);
     } else {
-        // Caso 1 y 2: 0 o 1 hijo
-        if (nodo->izq == nullptr || nodo->der == nullptr) {
-            Nodo<T>* temp = nodo->izq ? nodo->izq : nodo->der;
+        if (nodo->izq == nullptr || nodo->der == nullptr) { 
+            Nodo<T> *temp;
+            if (nodo->izq != nullptr) {
+                temp = nodo->izq;
+            } else {
+                temp = nodo->der;
+            }
 
             if (temp == nullptr) {
                 temp = nodo;
@@ -92,8 +102,7 @@ Nodo<T>* arbolAVL<T>::eliminarNodo(Nodo<T>* nodo, const T& valor) {
             }
             delete temp;
         } else {
-            // Caso 3: dos hijos → reemplazar con sucesor inorder
-            Nodo<T>* temp = nodoMinimo(nodo->der);
+            Nodo<T> *temp = nodoMinimo(nodo->der);
             nodo->dato = temp->dato;
             nodo->der = eliminarNodo(nodo->der, temp->dato);
         }
@@ -104,7 +113,7 @@ Nodo<T>* arbolAVL<T>::eliminarNodo(Nodo<T>* nodo, const T& valor) {
     }
 
     // Actualizar altura
-    nodo->altura = 1 + std::max(altura(nodo->izq), altura(nodo->der));
+    nodo->altura = 1 + max(altura(nodo->izq), altura(nodo->der));
 
     // Verificar balance
     int balance = obtenerBalance(nodo);
@@ -132,16 +141,14 @@ Nodo<T>* arbolAVL<T>::eliminarNodo(Nodo<T>* nodo, const T& valor) {
 }
 
 template <typename T>
-void arbolAVL<T>::erase(const T& valor) {
+void arbolAVL<T>::erase(T &valor) {
     raiz = eliminarNodo(raiz, valor);
 }
 
-
-// Inserción balanceada
-template <typename T>
-Nodo<T>* arbolAVL<T>::insertarNodo(Nodo<T>* nodo, const T& valor) {
+template <typename T> 
+Nodo<T>* arbolAVL<T>::insertarNodo(Nodo<T> *nodo, T &valor) {
     if (nodo == nullptr) {
-        Nodo<T>* nuevo = new Nodo<T>(valor);
+        Nodo<T> *nuevo = new Nodo<T>(valor);
         return nuevo;
     }
 
@@ -150,31 +157,26 @@ Nodo<T>* arbolAVL<T>::insertarNodo(Nodo<T>* nodo, const T& valor) {
     } else if (valor > nodo->dato) {
         nodo->der = insertarNodo(nodo->der, valor);
     } else {
-        // duplicado -> no insertar
-        return nodo;
+        return nodo; 
     }
 
-    // actualizar altura
-    nodo->altura = 1 + max(altura(nodo->izq), altura(nodo->der));
-
+    nodo->altura = 1 + max(altura(nodo->izq), altura(nodo->der)); 
     int balance = obtenerBalance(nodo);
 
-    // LL case
-    if (balance > 1 && valor < nodo->izq->dato)
+    if (balance > 1 && valor < nodo->izq->dato) {
         return rotarDerecha(nodo);
+    }
 
-    // RR case
-    if (balance < -1 && valor > nodo->der->dato)
+    if (balance < -1 && valor > nodo->der->dato) {
         return rotarIzquierda(nodo);
+    }
 
-    // LR case
-    if (balance > 1 && valor > nodo->izq->dato) {
+    if (balance > 1 && valor > nodo->izq->dato) { 
         nodo->izq = rotarIzquierda(nodo->izq);
         return rotarDerecha(nodo);
     }
 
-    // RL case
-    if (balance < -1 && valor < nodo->der->dato) {
+    if (balance < -1 && valor < nodo->der->dato) { 
         nodo->der = rotarDerecha(nodo->der);
         return rotarIzquierda(nodo);
     }
@@ -183,58 +185,62 @@ Nodo<T>* arbolAVL<T>::insertarNodo(Nodo<T>* nodo, const T& valor) {
 }
 
 template <typename T>
-void arbolAVL<T>::insert(const T& valor) {
+void arbolAVL<T>::insert(T &valor) {
     raiz = insertarNodo(raiz, valor);
 }
 
-// Recorridos internos que hacen push_back en la lista OUT
-template <typename T>
-void arbolAVL<T>::recPreOrden(Nodo<T>* nodo, list<T>& out) const {
-    if (nodo == nullptr) return;
+template <typename T> 
+void arbolAVL<T>::recPreOrden(Nodo<T> *nodo, list<T> &out) {
+    if (nodo == nullptr) {
+        return;
+    }
+    
     out.push_back(nodo->dato);
     recPreOrden(nodo->izq, out);
     recPreOrden(nodo->der, out);
 }
 
 template <typename T>
-void arbolAVL<T>::recInOrden(Nodo<T>* nodo, list<T>& out) const {
-    if (nodo == nullptr) return;
+void arbolAVL<T>::recInOrden(Nodo<T> *nodo, list<T> &out) {
+    if (nodo == nullptr) {
+        return;
+    }
+
     recInOrden(nodo->izq, out);
     out.push_back(nodo->dato);
     recInOrden(nodo->der, out);
 }
 
 template <typename T>
-void arbolAVL<T>::recPostOrden(Nodo<T>* nodo, list<T>& out) const {
-    if (nodo == nullptr) return;
+void arbolAVL<T>::recPostOrden(Nodo<T> *nodo, list<T> &out) {
+    if (nodo == nullptr) {
+        return;
+    }
+
     recPostOrden(nodo->izq, out);
     recPostOrden(nodo->der, out);
     out.push_back(nodo->dato);
 }
 
-// MÉTODOS PÚBLICOS: reciben 'out' y lo rellenan mediante push_back.
-// IMPORTANT: **NO** hacen clear ni borran 'out' (mismo comportamiento que arbolRN).
-template <typename T>
-void arbolAVL<T>::inordenEnLista(list<T>& out) const {
+template <typename T> 
+void arbolAVL<T>::inordenEnLista(list<T> &out) {
     recInOrden(raiz, out);
 }
 
 template <typename T>
-void arbolAVL<T>::preordenEnLista(list<T>& out) const {
+void arbolAVL<T>::preordenEnLista(list<T> &out) {
     recPreOrden(raiz, out);
 }
 
 template <typename T>
-void arbolAVL<T>::postordenEnLista(list<T>& out) const {
+void arbolAVL<T>::postordenEnLista(list<T> &out) {
     recPostOrden(raiz, out);
 }
 
-// size: construye una lista temporal y devuelve su tamaño (puedes evitar esto manteniendo contador)
-template <typename T>
-int arbolAVL<T>::size() const {
+template <typename T> 
+int arbolAVL<T>::size() {
     list<T> tmp;
     recInOrden(raiz, tmp);
-    // iterator explicit (no auto) to get size by iterating if you prefer, but tmp.size() is fine:
-    return static_cast<int>(tmp.size());
-}
 
+    return tmp.size();
+} 
